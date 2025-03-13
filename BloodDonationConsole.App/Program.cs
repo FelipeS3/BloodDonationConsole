@@ -56,6 +56,7 @@ namespace BancoDoacaoDeSangue.App
                 return;
             }
 
+
             Console.WriteLine("Data de Nascimento: (dd/mm/aaaa)");
             if(!DateTime.TryParse(Console.ReadLine(), out DateTime dataNascimento))
             {
