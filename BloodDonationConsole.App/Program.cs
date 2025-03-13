@@ -21,10 +21,11 @@ namespace BancoDoacaoDeSangue.App
             {
                 Console.WriteLine("Bem vindo ao programa.");
                 Console.WriteLine("Escolha uma opção");
-                Console.WriteLine("1 - Cadastrar  Doadores");
-                Console.WriteLine("2 - Registrar doação");
-                Console.WriteLine("3 - Consultar doador");
-                Console.WriteLine("4 - Sair");
+                Console.WriteLine("1 - Cadastrar Doadores");
+                Console.WriteLine("2 - Registrar Doação");
+                Console.WriteLine("3 - Consultar Doador");
+                Console.WriteLine("4 - Consultar Estoque");
+                Console.WriteLine("5 - Sair");
 
                 if (!int.TryParse(Console.ReadLine(), out int opcao))
                 {
@@ -37,7 +38,8 @@ namespace BancoDoacaoDeSangue.App
                     case 1: CadastrarDoador(); break;
                     case 2: RegistrarDoacao(); break;
                     case 3: ConsultarDoador(); break;
-                    case 4: Environment.Exit(0); break;
+                    case 4: ConsultarEstoque(); break;
+                    case 5: Environment.Exit(0); break;
                 }
             }
 
@@ -45,6 +47,7 @@ namespace BancoDoacaoDeSangue.App
 
         static void CadastrarDoador()
         {
+            Console.Clear();
             Console.WriteLine("Por favor informe seu nome: ");
             string nome = Console.ReadLine();
 
@@ -99,6 +102,7 @@ namespace BancoDoacaoDeSangue.App
 
         static void RegistrarDoacao()
         {
+            Console.Clear();
             Console.WriteLine("Insira seu email: ");
             string email = Console.ReadLine();
             var doador = doadores.FirstOrDefault(x => x.Email == email);
@@ -152,14 +156,14 @@ namespace BancoDoacaoDeSangue.App
             Console.WriteLine("Doação cadastrada com sucesso.");
 
             var estoque = estoquesDeSangue.FirstOrDefault(x =>
-                x.TipoSanguinio == doador.TipoSanguineo && x.FatorRh == doador.FatorRh);
+                x.TipoSanguineo == doador.TipoSanguineo && x.FatorRh == doador.FatorRh);
 
             if (estoque == null)
             {
                 var novoEstoque = new EstoqueDeSangue
                 {
                     Id = EstoqueId++,
-                    TipoSanguinio = doador.TipoSanguineo,
+                    TipoSanguineo = doador.TipoSanguineo,
                     FatorRh = doador.FatorRh,
                     QuantidadeMl = doacao.QuantidadeMl
                 };
@@ -174,6 +178,7 @@ namespace BancoDoacaoDeSangue.App
 
         static void ConsultarDoador()
         {
+            Console.Clear();
             Console.WriteLine("Digite o email do doador: ");
             string email = Console.ReadLine();
 
@@ -199,8 +204,21 @@ namespace BancoDoacaoDeSangue.App
             {
                 Console.WriteLine("Nenhuma doação registrada.");
             }
+        }
 
+        static void ConsultarEstoque()
+        {
+            Console.Clear();
+            if (!estoquesDeSangue.Any())
+            {
+                Console.WriteLine("Nenhum estoque disponível");
+                return;
+            }
 
+            foreach (var estoque in estoquesDeSangue)
+            {
+                Console.WriteLine($"Tipos: {estoque.TipoSanguineo}{estoque.FatorRh}, {estoque.QuantidadeMl}ML");
+            }
         }
     }
     class Doador
@@ -228,7 +246,7 @@ namespace BancoDoacaoDeSangue.App
     class EstoqueDeSangue
     {
         public int Id {get; set; }
-        public string TipoSanguinio { get; set; }
+        public string TipoSanguineo { get; set; }
         public string FatorRh { get; set; }
         public int QuantidadeMl { get; set; }
     }
