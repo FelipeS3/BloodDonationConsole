@@ -21,13 +21,9 @@
                 Console.WriteLine("2 - Registrar Doação");
                 Console.WriteLine("3 - Consultar Doador");
                 Console.WriteLine("4 - Consultar Estoque");
-<<<<<<< HEAD
                 Console.WriteLine("5 - Gerar Relatorios");
                 Console.WriteLine("6 - Listar Doadores");
                 Console.WriteLine("0 - Sair");
-=======
-                Console.WriteLine("5 - Sair");
->>>>>>> 18a50a122041da0c7aa80315cfaf3c595053e0c2
 
                 if (!int.TryParse(Console.ReadLine(), out int opcao))
                 {
@@ -41,13 +37,11 @@
                     case 2: RegistrarDoacao(); break;
                     case 3: ConsultarDoador(); break;
                     case 4: ConsultarEstoque(); break;
-<<<<<<< HEAD
                     case 5: GerarRelatorios(); break;
                     case 6: ListarDoadores(); break;
                     case 0: Environment.Exit(0); break;
-=======
-                    case 5: Environment.Exit(0); break;
->>>>>>> 18a50a122041da0c7aa80315cfaf3c595053e0c2
+                    
+
                 }
             }
         }
@@ -220,14 +214,13 @@
                 Console.WriteLine("Nenhum estoque disponível");
                 return;
             }
-<<<<<<< HEAD
-=======
+
 
             foreach (var estoque in estoquesDeSangue)
             {
                 Console.WriteLine($"Tipos: {estoque.TipoSanguineo}{estoque.FatorRh}, {estoque.QuantidadeMl}ML");
             }
->>>>>>> 18a50a122041da0c7aa80315cfaf3c595053e0c2
+
 
             foreach (var estoque in estoquesDeSangue)
             {
