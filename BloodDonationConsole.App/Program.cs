@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.JavaScript;
-
-namespace BancoDoacaoDeSangue.App
+﻿namespace BancoDoacaoDeSangue.App
 {
 
     class Program
@@ -25,7 +21,9 @@ namespace BancoDoacaoDeSangue.App
                 Console.WriteLine("2 - Registrar Doação");
                 Console.WriteLine("3 - Consultar Doador");
                 Console.WriteLine("4 - Consultar Estoque");
-                Console.WriteLine("5 - Sair");
+                Console.WriteLine("5 - Gerar Relatorios");
+                Console.WriteLine("6 - Listar Doadores");
+                Console.WriteLine("0 - Sair");
 
                 if (!int.TryParse(Console.ReadLine(), out int opcao))
                 {
@@ -39,10 +37,11 @@ namespace BancoDoacaoDeSangue.App
                     case 2: RegistrarDoacao(); break;
                     case 3: ConsultarDoador(); break;
                     case 4: ConsultarEstoque(); break;
-                    case 5: Environment.Exit(0); break;
+                    case 5: GerarRelatorios(); break;
+                    case 6: ListarDoadores(); break;
+                    case 0: Environment.Exit(0); break;
                 }
             }
-
         }
 
         static void CadastrarDoador()
@@ -64,17 +63,16 @@ namespace BancoDoacaoDeSangue.App
             if(!DateTime.TryParse(Console.ReadLine(), out DateTime dataNascimento))
             {
                 Console.WriteLine("Data em formato inválido.");
+                return;
             }
 
             Console.WriteLine("Informe seu gênero: (M/F)");
             string genero = Console.ReadLine();
 
             Console.WriteLine("Informe seu peso: ");
-            double peso = double.Parse(Console.ReadLine());
-            if (peso < 50)
+            if (!double.TryParse(Console.ReadLine(), out double peso) || peso < 50)
             {
                 Console.WriteLine("Peso inválido, mínimo de 50kg.");
-                return;
             }
 
             Console.WriteLine("Informe seu tipo sanguineo");
@@ -218,6 +216,42 @@ namespace BancoDoacaoDeSangue.App
             foreach (var estoque in estoquesDeSangue)
             {
                 Console.WriteLine($"Tipos: {estoque.TipoSanguineo}{estoque.FatorRh}, {estoque.QuantidadeMl}ML");
+            }
+        }
+
+        static void GerarRelatorios()
+        {
+            Console.Clear();
+            double totalDoacoes = doadores.Sum(d => d.Doacoes.Count);
+            double quantidadeML = doadores.Sum(d => d.Doacoes.Sum(doacao => doacao.QuantidadeMl));
+
+            if (totalDoacoes == 0)
+            {
+                Console.WriteLine("Nenhuma doação registrada.");
+                return;
+            }
+
+            double mediaML = quantidadeML / totalDoacoes;
+
+            
+
+            Console.WriteLine($"Total de doadores cadastrados: {doadores.Count} \n Total de doações realizadas: {totalDoacoes} \n Média de sangue doado por doação: {mediaML}ml");
+        }
+
+        static void ListarDoadores()
+        {
+            Console.Clear();
+            if (doadores.Count == 0)
+            {
+                Console.WriteLine("Nenhum doador cadastrado.");
+                return;
+            }
+
+            Console.WriteLine($"Lista de Doadores:");
+
+            foreach (var doador in doadores)
+            {
+                Console.WriteLine($"{doador.Nome} | {doador.Email}");
             }
         }
     }
