@@ -1,4 +1,6 @@
-﻿namespace BancoDoacaoDeSangue.App
+﻿using System.Text.Json;
+
+namespace BancoDoacaoDeSangue.App
 {
 
     class Program
@@ -75,6 +77,7 @@
             if (!double.TryParse(Console.ReadLine(), out double peso) || peso < 50)
             {
                 Console.WriteLine("Peso inválido, mínimo de 50kg.");
+                return;
             }
 
             Console.WriteLine("Informe seu tipo sanguineo");
@@ -197,7 +200,7 @@
             {
                 foreach (var doacao in doador.Doacoes)
                 {
-                     Console.WriteLine($"Data Doação: {doacao.DataDoacao}\n Quantidade: {doacao.QuantidadeMl}");
+                     Console.WriteLine($"Data Doação: {doacao.DataDoacao}\n Quantidade: {doacao.QuantidadeMl}ml");
                 }
             }
             else
@@ -215,17 +218,11 @@
                 return;
             }
 
-
             foreach (var estoque in estoquesDeSangue)
             {
-                Console.WriteLine($"Tipos: {estoque.TipoSanguineo}{estoque.FatorRh}, {estoque.QuantidadeMl}ML");
+                Console.WriteLine($"Tipos: {estoque.TipoSanguineo}{estoque.FatorRh}, {estoque.QuantidadeMl}ml");
             }
 
-
-            foreach (var estoque in estoquesDeSangue)
-            {
-                Console.WriteLine($"Tipos: {estoque.TipoSanguineo}{estoque.FatorRh}, {estoque.QuantidadeMl}ML");
-            }
         }
 
         static void GerarRelatorios()
@@ -241,8 +238,6 @@
             }
 
             double mediaML = quantidadeML / totalDoacoes;
-
-            
 
             Console.WriteLine($"Total de doadores cadastrados: {doadores.Count} \n Total de doações realizadas: {totalDoacoes} \n Média de sangue doado por doação: {mediaML}ml");
         }
@@ -263,6 +258,16 @@
                 Console.WriteLine($"{doador.Nome} | {doador.Email}");
             }
         }
+        static void SalvarDados()
+        {
+            string json = JsonSerializer.Serialize(doadores);
+
+            var obj = JsonSerializer.Deserialize<List<Doador>>(json);
+
+            File.WriteAllText("doadores.json", JsonSerializer.Serialize(doadores));
+
+            doadores = JsonSerializer.Deserialize<List<Doador>>(File.ReadAllText("doadores.json"));
+        }
     }
     class Doador
     {
@@ -277,7 +282,6 @@
         public List<Doacao> Doacoes { get; set; }
 
     }
-
     class Doacao
     {
         public int Id { get; set; }
