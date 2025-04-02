@@ -25,6 +25,8 @@ namespace BancoDoacaoDeSangue.App
                 Console.WriteLine("4 - Consultar Estoque");
                 Console.WriteLine("5 - Gerar Relatorios");
                 Console.WriteLine("6 - Listar Doadores");
+                Console.WriteLine("7 - Salvar Dados");
+                Console.WriteLine("8 - Carregar Dados");
                 Console.WriteLine("0 - Sair");
 
                 if (!int.TryParse(Console.ReadLine(), out int opcao))
@@ -41,6 +43,8 @@ namespace BancoDoacaoDeSangue.App
                     case 4: ConsultarEstoque(); break;
                     case 5: GerarRelatorios(); break;
                     case 6: ListarDoadores(); break;
+                    case 7: SalvarDados(); break;
+                    case 8: CarregarDados(); break;
                     case 0: Environment.Exit(0); break;
                     
 
@@ -223,7 +227,6 @@ namespace BancoDoacaoDeSangue.App
             }
 
         }
-
         static void GerarRelatorios()
         {
             Console.Clear();
@@ -260,13 +263,20 @@ namespace BancoDoacaoDeSangue.App
         }
         static void SalvarDados()
         {
-            string json = JsonSerializer.Serialize(doadores);
-
-            var obj = JsonSerializer.Deserialize<List<Doador>>(json);
-
             File.WriteAllText("doadores.json", JsonSerializer.Serialize(doadores));
+            File.WriteAllText("estoque.json", JsonSerializer.Serialize(estoquesDeSangue));
+        }
 
-            doadores = JsonSerializer.Deserialize<List<Doador>>(File.ReadAllText("doadores.json"));
+        static void CarregarDados()
+        {
+            if (File.Exists("doadores.json"))
+            {
+                doadores = JsonSerializer.Deserialize<List<Doador>>(File.ReadAllText("doadores.json"));
+            }
+            if (File.Exists("estoque.json"))
+            {
+                estoquesDeSangue = JsonSerializer.Deserialize<List<EstoqueDeSangue>>(File.ReadAllText("estoque.json"));
+            }
         }
     }
     class Doador
