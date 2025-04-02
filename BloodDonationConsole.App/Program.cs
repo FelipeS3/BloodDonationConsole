@@ -7,7 +7,7 @@ namespace BancoDoacaoDeSangue.App
     {
         static void Main(string[] args)
         {
-            GerenciadorDados.CarregarDados();
+            GerenciadorDados.CarregarDados(); 
             while (true)
             {
                 Console.WriteLine("Bem vindo ao programa.");
