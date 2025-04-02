@@ -102,7 +102,6 @@ namespace BancoDoacaoDeSangue.App
             doadores.Add(doador);
             Console.WriteLine("Doador cadastrado com sucesso!");
         }
-
         static void RegistrarDoacao()
         {
             Console.Clear();
@@ -236,6 +235,7 @@ namespace BancoDoacaoDeSangue.App
                 Console.WriteLine("Nenhuma doação registrada.");
                 return;
             }
+
 
             double mediaML = quantidadeML / totalDoacoes;
 
