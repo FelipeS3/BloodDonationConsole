@@ -35,7 +35,7 @@ namespace BancoDoacaoDeSangue.App
                     continue;
                 }
 
-                switch (opcao)
+                switch (opcao) 
                 {
                     case 1: CadastrarDoador(); break;
                     case 2: RegistrarDoacao(); break;
