@@ -15,6 +15,8 @@ namespace BancoDoacaoDeSangue.App
 
         static void Main(string[] args)
         {
+            CarregarDados();
+
             while (true)
             {
                 Console.WriteLine("Bem vindo ao programa.");
@@ -25,8 +27,6 @@ namespace BancoDoacaoDeSangue.App
                 Console.WriteLine("4 - Consultar Estoque");
                 Console.WriteLine("5 - Gerar Relatorios");
                 Console.WriteLine("6 - Listar Doadores");
-                Console.WriteLine("7 - Salvar Dados");
-                Console.WriteLine("8 - Carregar Dados");
                 Console.WriteLine("0 - Sair");
 
                 if (!int.TryParse(Console.ReadLine(), out int opcao))
@@ -43,10 +43,7 @@ namespace BancoDoacaoDeSangue.App
                     case 4: ConsultarEstoque(); break;
                     case 5: GerarRelatorios(); break;
                     case 6: ListarDoadores(); break;
-                    case 7: SalvarDados(); break;
-                    case 8: CarregarDados(); break;
-                    case 0: Environment.Exit(0); break;
-                    
+                    case 0: SalvarDados(); Environment.Exit(0); break;
 
                 }
             }
